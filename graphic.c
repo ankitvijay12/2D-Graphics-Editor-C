@@ -1,18 +1,22 @@
-include <stdio.h>
+#include <stdio.h>
 
-char canvas[30][60];
+#define ROWS 30
+#define COLS 60
+
+char canvas[ROWS][COLS];
 
 void initializeCanvas();
 void clearCanvas();
 void displayCanvas();
+
 void drawLine(int row, int col, int length);
 void drawRectangle(int row, int col, int width, int height);
 
 void initializeCanvas()
 {
-    for(int i=0;i<30;i++)
+    for(int i=0;i<ROWS;i++)
     {
-        for(int j=0;j<60;j++)
+        for(int j=0;j<COLS;j++)
         {
             canvas[i][j]=' ';
         }
@@ -21,20 +25,16 @@ void initializeCanvas()
 
 void clearCanvas()
 {
-    for(int i=0;i<30;i++)
-    {
-        for(int j=0;j<60;j++)
-        {
-            canvas[i][j]=' ';
-        }
-    }
+    initializeCanvas();
 }
 
 void displayCanvas()
 {
-    for(int i=0;i<30;i++)
+    printf("\n");
+
+    for(int i=0;i<ROWS;i++)
     {
-        for(int j=0;j<60;j++)
+        for(int j=0;j<COLS;j++)
         {
             printf("%c",canvas[i][j]);
         }
@@ -42,15 +42,15 @@ void displayCanvas()
     }
 }
 
-void drawLine(int row, int col, int length)
+void drawLine(int row,int col,int length)
 {
-    for(int i=0;i<length;i++)
+    for(int i=0;i<length && col+i<COLS;i++)
     {
         canvas[row][col+i]='*';
     }
 }
 
-void drawRectangle(int row, int col, int width, int height)
+void drawRectangle(int row,int col,int width,int height)
 {
     for(int i=0;i<width;i++)
     {
@@ -79,6 +79,7 @@ int main()
         printf("3. Display Canvas\n");
         printf("4. Clear Canvas\n");
         printf("5. Exit\n");
+
         printf("Enter Choice: ");
         scanf("%d",&choice);
 
@@ -89,6 +90,7 @@ int main()
                 int row,col,length;
                 printf("Enter row col length: ");
                 scanf("%d%d%d",&row,&col,&length);
+
                 drawLine(row,col,length);
                 break;
             }
@@ -96,8 +98,10 @@ int main()
             case 2:
             {
                 int row,col,width,height;
+
                 printf("Enter row col width height: ");
                 scanf("%d%d%d%d",&row,&col,&width,&height);
+
                 drawRectangle(row,col,width,height);
                 break;
             }
@@ -119,7 +123,7 @@ int main()
                 printf("Invalid Choice\n");
         }
 
-    } while(choice != 5);
+    }while(choice!=5);
 
     return 0;
 }
